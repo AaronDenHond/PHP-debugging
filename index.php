@@ -1,9 +1,14 @@
 <?php
+
+
 declare(strict_types=1);
 
-ini_set('display_errors', "1");
-ini_set('display_startup_errors', "1");
+
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
+
+
 
 // === Exercise 1 ===
 // Below we're defining a function, but it doesn't work when we run it.
@@ -11,15 +16,18 @@ error_reporting(E_ALL);
 // sometimes, even your IDE can tell you what's wrong
 echo "Exercise 1 starts here:";
 
-function new_exercise($x) {
-    
+function new_exercise($x)
+{
+
     $block = "<br/><hr/><br/><br/>Exercise $x starts here:<br/>";
     echo $block;
-
 }
 
 
+new_exercise(1);
+
 new_exercise(2);
+
 // === Exercise 2 ===
 // Below we create a week array with all days of the week.
 // We then try to print the first day which is monday, execute the code and see what happens.
@@ -35,5 +43,103 @@ new_exercise(3);
 
 $str = '"Debugged !" Also very fun';
 echo substr($str, 0, 12);
+
+new_exercise(4);
+// === Exercise 4 ===
+// Sometimes debugging code is just like looking up code and syntax...
+// The print_r($week) should give:  Array ( [0] => mon [1] => tues [2] => wednes [3] => thurs [4] => fri [5] => satur [6] => sun )
+// Look up whats going wrong with this code, and then fix it, with ONE CHARACTER!
+
+foreach ($week as &$day) {
+   
+    $day = substr($day, 0, strlen($day) - 3);
+    //var_dump($day);
+}
+
+print_r($week);
+//second solution 
+//change print_r($week) to current day? I think
+
+//In order to be able to directly modify array elements within the loop AND STORE/CHANGE DATA precede $value with &. In that case the value will be assigned by reference.
+
+
+new_exercise(5);
+// === Exercise 5 ===
+// The array should be printing every letter of the alfabet (a-z) but instead it does that + aa-yz
+// Fix the code so the for loop only pushes a-z in the array
+
+$arr = [];
+for ($letter = 'a'; $letter !='aa' ; $letter++) {
+     {
+        array_push($arr, $letter);
+    }
+}
+/* $arr = [];
+for ($letter = 'a'; $letter <= 'z' && strlen($letter) > 2 ; $letter++) {
+     {
+        array_push($arr, $letter);
+    }
+} */
+// try usually not to increment letters, make array with letters instead
+print_r($arr); 
+// Array ([0] => a, [1] => b, [2] => c, ...) a-z alfabetical array
+
+
+new_exercise(6);
+// === Final exercise ===
+// The fixed code should echo the following at the bottom:
+// Here is the name: $name - $name2
+// $name variables are decided as seen in the code, fix all the bugs whilst keeping the functionality!
+$arr = [];
+
+
+function combineNames($str1 = "", $str2 = "") {
+    $params = [$str1, $str2];
+    // & zorgt ervoor dat de value van $param wordt opgeslagen en niet in rook opgaat
+    foreach($params as &$param) {
+        if ($param == "") {
+            $param = randomHeroName();
+        }
+    }
+    // hieruit komt combined name via implode
+    return implode('-',$params);
+     
+}
+
+//unused function! bait
+function randomGenerate($arr, $amount) {
+    for ($i = $amount; $i > 0; $i--) {
+        array_push($arr, randomHeroName());
+    }
+
+    return $amount;
+}
+
+function randomHeroName()
+{
+    $hero_firstnames = ["captain", "doctor", "iron", "Hank", "ant", "Wasp", "the", "Hawk", "Spider", "Black", "Carol"];
+    $hero_lastnames = ["America", "Strange", "man", "Pym", "girl", "hulk", "eye", "widow", "panther", "daredevil", "marvel"];
+    $heroes = [$hero_firstnames, $hero_lastnames];
+    // need to -1 cause only 2 elements in array heroes (hero firstname and lastnames)
+    $randname = $heroes[rand(0,count($heroes)-1)][rand(0, 10)];
+
+    return $randname;
+}
+
+echo "Here is the name: " . combineNames();
+
+
+new_exercise(7);
+
+function copyright($year) {
+    settype($year, "string");
+    return $year . 'copyright Becode';
+}
+//print the copyright
+echo copyright(date('Y'));
+
+//idate ook mogelijk
+
+
 
 
